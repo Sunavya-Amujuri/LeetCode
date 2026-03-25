@@ -6,6 +6,7 @@
 | ------- |
 | [0001-two-sum](https://github.com/Sunavya-Amujuri/LeetCode/tree/master/0001-two-sum) |
 | [0027-remove-element](https://github.com/Sunavya-Amujuri/LeetCode/tree/master/0027-remove-element) |
+| [0121-best-time-to-buy-and-sell-stock](https://github.com/Sunavya-Amujuri/LeetCode/tree/master/0121-best-time-to-buy-and-sell-stock) |
 | [0169-majority-element](https://github.com/Sunavya-Amujuri/LeetCode/tree/master/0169-majority-element) |
 | [0217-contains-duplicate](https://github.com/Sunavya-Amujuri/LeetCode/tree/master/0217-contains-duplicate) |
 | [0219-contains-duplicate-ii](https://github.com/Sunavya-Amujuri/LeetCode/tree/master/0219-contains-duplicate-ii) |
@@ -41,4 +42,8 @@
 |  |
 | ------- |
 | [0169-majority-element](https://github.com/Sunavya-Amujuri/LeetCode/tree/master/0169-majority-element) |
+## Dynamic Programming
+|  |
+| ------- |
+| [0121-best-time-to-buy-and-sell-stock](https://github.com/Sunavya-Amujuri/LeetCode/tree/master/0121-best-time-to-buy-and-sell-stock) |
 <!---LeetCode Topics End-->
