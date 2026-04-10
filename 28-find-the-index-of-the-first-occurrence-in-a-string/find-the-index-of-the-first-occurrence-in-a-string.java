@@ -1,46 +1,52 @@
 class Solution {
     public int strStr(String haystack, String needle) {
-         if(needle.length() == 0) return 0;
-        int lps[] = buildLps(needle);
-        int i = 0, j = 0;
-
-        while(i < haystack.length()){
-            if(haystack.charAt(i) == needle.charAt(j)){
-                i++;
-                j++;
+        if(needle.length() == 0) return 0;
+        char[] text = haystack.toCharArray();
+        char[] pattern = needle.toCharArray();
+        char[] newString = new char[text.length + pattern.length + 1];
+        int i = 0;
+        for(char ch : pattern){
+            newString[i++] = ch;
+        }
+        newString[i++] = '$';
+        for(char ch : text){
+            newString[i++] = ch;
+        }
+        int[] z = calculate(newString);
+        List<Integer> result = new ArrayList<>();
+        for(int j=0; j<z.length; j++){
+            if(z[j] == pattern.length){
+                return j - pattern.length - 1;
             }
-            if(j == needle.length()){
-                return i-j;
-            } else if (i < haystack.length() && haystack.charAt(i) != needle.charAt(j)){
-                if(j != 0){
-                    j = lps[j-1];
-                } else {
-                    i++;
-                }
-            } 
         }
         return -1;
     }
-    static int[] buildLps(String needle){
-        int n = needle.length();
-        int[] lps = new int[n];
-        int len = 0, i = 1;
-
-        while(i < n){
-            if(needle.charAt(len) == needle.charAt(i)){
-                len++;
-                lps[i] = len;
-                i++;
-            } else {
-                if(len != 0){
-                    len = lps[len-1];
-                } else {
-                    lps[i] = 0;
-                    i++;
+    public static int[] calculate(char[] input){
+        int[] z = new int[input.length];
+        int l = 0, r = 0;
+        for(int k=1; k<input.length; k++){
+            if(k > r){
+                l = r = k;
+                while(r < input.length && input[r] == input[r-l]){
+                    r++;
                 }
-            } 
-            
+                z[k] = r-l;
+                r--;
+            } else {
+                int k1 = k-l;
+                if(z[k1] < r-k+1){
+                    z[k] = z[k1];
+                }
+                else {
+                    l = k;
+                    while(r < input.length && input[r] == input[r-l]){
+                        r++;
+                    }
+                    z[k] = r-l;
+                    r--;
+                }
+            }
         }
-        return lps;
+        return z;
     }
 }
