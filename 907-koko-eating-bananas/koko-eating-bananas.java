@@ -17,7 +17,7 @@ class Solution {
     public boolean canEat(int[] piles, int h, int mid){
         int hours = 0;
         for(int p : piles){
-            hours += (p+mid-1)/mid;
+            hours += (int)Math.ceil((double)p/mid);
         }
         return hours <= h;
     }
