@@ -12,12 +12,12 @@ class Solution {
 
                 int res = 0;
 
-                if(token.equals("+")) res = t2+t1;
-                else if(token.equals("-")) res = t2-t1;
-                else if(token.equals("*")) res = t2*t1;
-                else res = t2/t1;
-
-                st.push(res);
+                switch(token){
+                    case "+": st.push(t2+t1); break;
+                    case "-": st.push(t2-t1); break;
+                    case "*": st.push(t2*t1); break;
+                    case "/": st.push(t2/t1); break;
+                }
             } else {
                 st.push(Integer.parseInt(token));
             }
