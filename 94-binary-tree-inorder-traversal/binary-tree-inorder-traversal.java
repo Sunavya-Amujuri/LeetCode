@@ -15,18 +15,30 @@
  */
 class Solution {
     public List<Integer> inorderTraversal(TreeNode root) {
-        Stack<TreeNode> st = new Stack<>();
         TreeNode curr = root;
         List<Integer> res = new ArrayList<>();
 
-        while(curr != null || !st.isEmpty()){
-            while(curr != null){
-                st.push(curr);
-                curr = curr.left;
+        while(curr != null){
+            if(curr.left == null){
+                res.add(curr.val);
+                curr = curr.right;
+            } else {
+                TreeNode prev = curr.left;
+                // find IP
+                while(prev.right != null && prev.right != curr){
+                    prev = prev.right;
+                }
+                if(prev.right == null){
+                    // create thread
+                    prev.right = curr;
+                    curr = curr.left;
+                } else {
+                    // remove thread
+                    prev.right = null;
+                    res.add(curr.val);
+                    curr = curr.right;
+                }
             }
-            curr = st.pop();
-            res.add(curr.val);
-            curr = curr.right;
         }
         return res;
     }
