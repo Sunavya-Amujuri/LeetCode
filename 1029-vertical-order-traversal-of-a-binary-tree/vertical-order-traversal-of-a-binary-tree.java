@@ -32,7 +32,7 @@ class Solution {
 
         // Step 3: Group by column
         for (int[] node : nodes) {
-            int col = node[0], val = node[2];
+            int col = node[0], row = node[1], val = node[2];
             if (col != prevCol) {
                 result.add(new ArrayList<>());
                 prevCol = col;
