@@ -15,51 +15,55 @@
  */
 class Solution {
     public List<List<Integer>> verticalTraversal(TreeNode root) {
-        TreeMap<Integer, TreeMap<Integer, PriorityQueue<Integer>>> map = new TreeMap<>();
-        Queue<Tuple> q = new LinkedList<Tuple>();
+        List<Tuple> list = new ArrayList<>();
 
-        q.offer(new Tuple(root, 0, 0));
+        Queue<Object[]> q = new LinkedList<>();
+        q.offer(new Object[]{root, 0, 0}); // node, row, col
 
+        // BFS
         while (!q.isEmpty()) {
-            Tuple tuple = q.poll();
-            TreeNode node = tuple.node;
-            int x = tuple.row;
-            int y = tuple.col;
+            Object[] arr = q.poll();
+            TreeNode node = (TreeNode) arr[0];
+            int row = (int) arr[1];
+            int col = (int) arr[2];
 
-            if(!map.containsKey(y)){
-                map.put(y, new TreeMap<>());
-            }
-            if(!map.get(y).containsKey(x)){
-                map.get(y).put(x, new PriorityQueue<>());
-            }
-            map.get(y).get(x).offer(node.val);
+            list.add(new Tuple(col, row, node.val));
 
             if (node.left != null) {
-                q.offer(new Tuple(node.left, x+1, y-1));
+                q.offer(new Object[]{node.left, row + 1, col - 1});
             }
 
             if (node.right != null) {
-                q.offer(new Tuple(node.right, x+1, y+1));
+                q.offer(new Object[]{node.right, row + 1, col + 1});
             }
         }
-        List<List<Integer>> list = new ArrayList<>();
-        for (TreeMap<Integer, PriorityQueue<Integer>> ys : map.values()) {
-            list.add(new ArrayList<>());
-            for(PriorityQueue<Integer> nodes : ys.values()){
-                while(!nodes.isEmpty()){
-                    System.out.println(nodes.peek());
-                    list.get(list.size()-1).add(nodes.poll());
-                }
+
+        // Sort
+        Collections.sort(list, (a, b) -> {
+            if (a.col != b.col) return a.col - b.col;
+            if (a.row != b.row) return a.row - b.row;
+            return a.val - b.val;
+        });
+
+        // Group by column
+        List<List<Integer>> res = new ArrayList<>();
+        int prevCol = Integer.MIN_VALUE;
+
+        for (Tuple t : list) {
+            if (t.col != prevCol) {
+                res.add(new ArrayList<>());
+                prevCol = t.col;
             }
+            res.get(res.size() - 1).add(t.val);
         }
-        return list;
+
+        return res;
     }
     static class Tuple{
-        int row, col;
-        TreeNode node;
+        int row, col, val;
 
-        public Tuple(TreeNode node, int row, int col){
-            this.node = node;
+        public Tuple(int col, int row, int val){
+            this.val = val;
             this.row = row;
             this.col = col;
         }
